@@ -1,5 +1,11 @@
+.menu-rows {
+  display: flex;
+}
+
 .menu-buttons {
   height: 80px;
   flex-grow: 1;
   width: 100%;
 }
+
+
