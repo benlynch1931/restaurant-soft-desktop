@@ -7,8 +7,8 @@ class AppContextProvider extends Component {
     screen: 'main'
 }
 
-  setStitchCount = (newSize) => {
-    this.setState({ stitchCount: newSize})
+  setScreen = (newScreen) => {
+    this.setState({ screen: newScreen})
   }
 
 
@@ -18,7 +18,7 @@ class AppContextProvider extends Component {
     return (
       <AppContext.Provider value={{
         ...this.state,
-        setStitchCount: this.setStitchCount,
+        setScreen: this.setScreen,
       }}>
       {this.props.children}
       </AppContext.Provider>
