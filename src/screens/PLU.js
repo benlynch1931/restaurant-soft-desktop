@@ -154,33 +154,21 @@ const PLU = () => {
     .then(data => {
       let formattedPLU = []
       data.plu_items.forEach((item) => {
-        for (var key in item) {
-          item[key] = formatPLUItemNumbers(item, key)
-        }
-        formattedPLU.push(item)
+        // Make all decimal numbers have 2 places
+        const formattedItem = formatPLUItem(item)
+        formattedPLU.push(formattedItem)
       });
       setPluItems(formattedPLU)
     })
   }
   
-  const formatPLUItemNumbers = (item, key) => {
-    // if key name is these AND the value of the key doesn't have two decimal places
-    if (key == 'first_price' && item[key].split('.')[1].length === 1) {
-      return parseFloat(item[key]).toFixed(2)
-    }
-    if (key == 'second_price' && item[key].split('.')[1].length === 1) {
-      return parseFloat(item[key]).toFixed(2)
-    }
-    if (key == 'first_quantity' && item[key].split('.')[1].length === 1) {
-      return parseFloat(item[key]).toFixed(2)
-    }
-    if (key == 'second_quantity' && item[key].split('.')[1].length === 1) {
-      return parseFloat(item[key]).toFixed(2)
-    }
-    // if you haven't returned yet, just return exactly the same value.
-    return item[key]
+  const formatPLUItem = (item) => {
+    item.first_price = parseFloat(item.first_price).toFixed(2)
+    item.second_price = parseFloat(item.second_price).toFixed(2)
+    item.first_quantity = parseFloat(item.first_quantity).toFixed(2)
+    item.second_quantity = parseFloat(item.second_quantity).toFixed(2)
+    return item
   }
-
   
   const renderPLUItems = () => {
     let rendering = []
