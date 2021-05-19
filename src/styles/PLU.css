@@ -32,9 +32,9 @@
   position: absolute;
   right: 5%;
   top: calc(5% - 15px);
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
-  color: #FFFFFF;
+  /* background-color: rgba(0, 0, 0, 0); */
+  /* border: none; */
+  /* color: #FFFFFF; */
   font-size: 30px;
   line-height: 30px;
 }
@@ -56,6 +56,7 @@
   margin-top: 0;
   list-style: none;
   height: 100%;
+  width: 100%;
   overflow-y: scroll;
   padding-right: 40px;
   padding: 20px 40px;
@@ -67,15 +68,25 @@
   border-bottom: 1px solid #000000;
 }
 
+.edit-plu-item__list-item:hover {
+  background-color: #20D0D6;
+}
 
 
-.edit-plu-item__list-item h3, .edit-plu-item__list-item button {
+
+.edit-plu-item__list-item h3, .edit-plu-item__list-item button, .edit-plu-item__list-input {
   flex-grow: 1;
   width: 100%;
 }
 
+.edit-plu-item__list-input {
+  font-size: 22px;
+  text-align: left;
+  border: none;
+}
+
 .edit-plu-item__list-button {
-  background-color: #FFFFFF;
+  background-color: rgba(0, 0, 0, 0);
   border: none;
   text-align: left;
 }

@@ -24,6 +24,11 @@ const PLU = () => {
     setSpecificPluItem(pluItem)
   }
   
+  const pluItemValueChange = (key, event) => {
+    delete specificPluItem[key]
+    setSpecificPluItem({ ...specificPluItem, [key]: event.target.value })
+  }
+  
   const renderSpecificPLUItem = () => {
     if (specificPluItem == null) {
       return null
@@ -38,7 +43,7 @@ const PLU = () => {
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Title</h3>
-              <button className='edit-plu-item__list-button'><h2>{ specificPluItem.title }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('title', event) }} value={specificPluItem.title}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
