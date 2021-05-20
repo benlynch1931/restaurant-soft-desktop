@@ -14,7 +14,7 @@ const MainMenu = () => {
         <button className="menu-buttons" onClick={() => { setScreen('main') }}><h2>Food</h2></button>
       </div>
       <div className="menu-rows">
-        <button className="menu-buttons" onClick={() => { setScreen('main') }}><h2>Settings</h2></button>
+        <button className="menu-buttons" onClick={() => { setScreen('settings') }}><h2>Settings</h2></button>
         <button className="menu-buttons" onClick={() => { setScreen('plu') }}><h2>PLU</h2></button>
       </div>
     </div>
