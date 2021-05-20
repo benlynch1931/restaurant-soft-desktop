@@ -115,7 +115,7 @@ const GroupsSettings = () => {
       rendering.push(
         <li id={`container ${idx}`}>
         <button style={{ width: '100%', display: 'flex', flexDirection: 'row' }} onClick={() => { getSpecificGroup(idx); setDisplayGroupItem('block') }}>
-          <h2 className='item-plu'>{item.index}</h2>
+          <h2 className='item-group'>{item.index}</h2>
           <h2>{item.group}</h2>
         </button>
         </li>
@@ -147,15 +147,10 @@ const GroupsSettings = () => {
   }
   
   const renderTrueFalse = () => {
-    if (specificGroupItem.display_bar == 'YES') {
-      specificGroupItem.display_bar = true
+    if (specificGroupItem.allow_report_printing == 'YES') {
+      specificGroupItem.allow_report_printing = true
     } else {
-      specificGroupItem.display_bar = false
-    }
-    if (specificGroupItem.display_kitchen == 'YES') {
-      specificGroupItem.display_kitchen = true
-    } else {
-      specificGroupItem.display_kitchen = false
+      specificGroupItem.allow_report_printing = false
     }
   }
   
@@ -168,7 +163,7 @@ const GroupsSettings = () => {
       
       <h1 style={{ textAlign: 'center' }}>Groups</h1>
       <button onClick={() => {getGroups()}}>Test</button>
-      <ul className='plu-list'>
+      <ul className='group-list'>
         { renderGroups() }
       </ul>
     </div>
