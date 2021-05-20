@@ -1,20 +1,20 @@
-.plu-list h2 {
+.group-list h2 {
   margin: 10px 0;
 }
 
-.plu-list button {
+.group-list button {
   border: none;
   background-color: #FFFFFF;
 }
 
-.plu-list {
+.group-list {
   list-style-type: none;
   padding-right: 40px;
   overflow-y: scroll;
   height: 50%
 }
 
-.item-plu {
+.item-group {
   width: 5%;
   text-align: left;
 }
