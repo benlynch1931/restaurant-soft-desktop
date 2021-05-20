@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 
 import AppContextProvider from './contexts/AppContext.js'
 import ScreenController from './controllers/ScreenController.js'
