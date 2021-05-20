@@ -85,6 +85,13 @@
   border: none;
 }
 
+.edit-plu-item__list-input-button {
+  font-size: 22px;
+  text-align: left;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .edit-plu-item__list-button {
   background-color: rgba(0, 0, 0, 0);
   border: none;

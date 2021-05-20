@@ -46,6 +46,23 @@ const PLU = () => {
     setPluItems(pluListToUpdate)
   }
   
+  const pluItemBooleanChange = (key, value, index) => {
+    console.log('value' + value)
+    let newValue = !value
+    delete specificPluItem[key]
+    setSpecificPluItem({ ...specificPluItem, [key]: newValue })
+    
+    // get object that needs the value added to
+    let pluItemToUpdate = pluItems[index]
+    pluItemToUpdate = { ...pluItemToUpdate, [key]: newValue }
+    // get whole PLU list
+    let pluListToUpdate = pluItems
+    // update specific object with new value
+    pluListToUpdate[index] = pluItemToUpdate
+    // update state with pluList including all values
+    setPluItems(pluListToUpdate)
+  }
+  
   const renderSpecificPLUItem = () => {
     if (specificPluItem == null) {
       return null
@@ -100,12 +117,12 @@ const PLU = () => {
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Display On Bar</h3>
-              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('display_bar', event, specificPluIndex) }} value={specificPluItem.display_bar}/>
+              <button className='edit-plu-item__list-input-button' onClick={(event) => { pluItemBooleanChange('display_bar', specificPluItem.display_bar, specificPluIndex) }}>{ renderYesNo(specificPluItem.display_bar) }</button>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Display on Kitchen</h3>
-              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('display_kitchen', event, specificPluIndex) }} value={specificPluItem.display_kitchen}/>
+              <button className='edit-plu-item__list-input-button' onClick={(event) => { pluItemBooleanChange('display_kitchen', specificPluItem.display_kitchen, specificPluIndex) }}>{ renderYesNo(specificPluItem.display_kitchen) }</button>
             </li>
             
             { displayDrinkOrFoodInfo(specificPluItem.group) }
