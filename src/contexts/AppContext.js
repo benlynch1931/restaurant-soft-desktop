@@ -13,7 +13,7 @@ class AppContextProvider extends Component {
   }
   
   setSettingsScreen = (newScreen) => {
-    this.setState({ screen: newScreen})
+    this.setState({ settingsScreen: newScreen})
   }
 
 
