@@ -21,7 +21,9 @@ const ScreenController = () => {
       <PLU></PLU>
     )
   } else if (screen == 'settings') {
-    <SettingsController></SettingsController>
+    return (
+      <SettingsController></SettingsController>
+    )
   }
 }
 
