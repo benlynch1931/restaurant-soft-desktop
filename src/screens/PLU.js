@@ -70,42 +70,42 @@ const PLU = () => {
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Department</h3>
-              <button className='edit-plu-item__list-button'><h2>{ specificPluItem.department }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('department', event, specificPluIndex) }} value={specificPluItem.department}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>First Price</h3>
-              <button className='edit-plu-item__list-button'><h2>{ specificPluItem.first_price }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('first_price', event, specificPluIndex) }} value={specificPluItem.first_price}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Second Price</h3>
-              <button className='edit-plu-item__list-button'><h2>{ specificPluItem.second_price }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('second_price', event, specificPluIndex) }} value={specificPluItem.second_price}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>First Quantity</h3>
-              <button className='edit-plu-item__list-button'><h2>{ specificPluItem.first_quantity }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('first_quantity', event, specificPluIndex) }} value={specificPluItem.first_quantity}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Second Quantity</h3>
-              <button className='edit-plu-item__list-button'><h2>{ specificPluItem.second_quantity }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('second_quantity', event, specificPluIndex) }} value={specificPluItem.second_quantity}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Second Modifier</h3>
-              <button className='edit-plu-item__list-button'><h2>{ specificPluItem.second_modifier }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('second_modifier', event, specificPluIndex) }} value={specificPluItem.second_modifier}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Display On Bar</h3>
-              <button className='edit-plu-item__list-button'><h2>{ renderYesNo(specificPluItem.display_bar) }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('display_bar', event, specificPluIndex) }} value={specificPluItem.display_bar}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Display on Kitchen</h3>
-              <button className='edit-plu-item__list-button'><h2>{ renderYesNo(specificPluItem.display_kitchen) }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('display_kitchen', event, specificPluIndex) }} value={specificPluItem.display_kitchen}/>
             </li>
             
             { displayDrinkOrFoodInfo(specificPluItem.group) }
@@ -114,12 +114,12 @@ const PLU = () => {
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Background Colour</h3>
-              <button className='edit-plu-item__list-button'><h2>{ specificPluItem.background }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('background', event, specificPluIndex) }} value={specificPluItem.background}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Text Colour</h3>
-              <button className='edit-plu-item__list-button'><h2>{ specificPluItem.text }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('text', event, specificPluIndex) }} value={specificPluItem.text}/>
             </li>
           </ul>
         </div>
@@ -140,24 +140,24 @@ const PLU = () => {
       rendering.push(
         <li className='edit-plu-item__list-item'>
           <h3>ABV</h3>
-          <h3>{ specificPluItem.alcoholic_percentage }%</h3>
+          <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('alcoholic_percentage', event, specificPluIndex) }} value={specificPluItem.alcoholic_percentage}/>
         </li>
       )
       rendering.push(<li className='edit-plu-item__list-item'>
           <h3>Brewery/Manufacturer</h3>
-          <h3>{ specificPluItem.brewery }</h3>
+          <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('brewery', event, specificPluIndex) }} value={specificPluItem.brewery}/>
         </li>
       )
       rendering.push(<li className='edit-plu-item__list-item'>
           <h3>Description</h3>
-          <h3>{ specificPluItem.description }</h3>
+          <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('description', event, specificPluIndex) }} value={specificPluItem.description}/>
         </li>
       )
     } else {
       rendering.push(
         <li className='edit-plu-item__list-item'>
           <h3>Allergens</h3>
-          <h3>{ specificPluItem.allergens }</h3>
+          <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('allergens', event, specificPluIndex) }} value={specificPluItem.allergens}/>
         </li>
       )
     }
