@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 
 import MainSettings from '../screens/settings/MainSettings.js';
-import GroupsSettings from '../screens/settings/GroupsSettings.js'
+import GroupsSettings from '../screens/settings/GroupsSettings.js';
+import DepartmentsSettings from '../screens/settings/DepartmentsSettings.js';
 
 import { AppContext } from '../contexts/AppContext.js'
 
@@ -29,7 +30,7 @@ const SettingsController = () => {
     )
   } else if (settingsScreen == 'departments') {
     return (
-      null
+      <DepartmentsSettings></DepartmentsSettings>
     )
   }
 }
