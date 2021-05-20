@@ -10,6 +10,7 @@ const PLU = () => {
   
   const [pluItems, setPluItems] = useState([])
   const [specificPluItem, setSpecificPluItem] = useState(null)
+  const [specificPluIndex, setSpecificPluIndex] = useState(null)
   const [displayPLUItem, setDisplayPLUItem] = useState('none')
   
   const pool = new Pool({
@@ -21,12 +22,28 @@ const PLU = () => {
   
   const getSpecificPLUItem = (pluIndex) => {
     const pluItem = pluItems[pluIndex]
+    setSpecificPluIndex(pluIndex)
     setSpecificPluItem(pluItem)
   }
   
-  const pluItemValueChange = (key, event) => {
+  const pluItemValueChange = (key, event, index) => {
     delete specificPluItem[key]
     setSpecificPluItem({ ...specificPluItem, [key]: event.target.value })
+    
+    // ------------------------------------------
+    // When updating a specific value, i.e. the title, the title value would NOT appear in the object of the PLU item
+    // The lines below fix that by adding it in and updating the state.
+    // ------------------------------------------
+    
+    // get object that needs the value added to
+    let pluItemToUpdate = pluItems[index]
+    pluItemToUpdate = { ...pluItemToUpdate, [key]: event.target.value }
+    // get whole PLU list
+    let pluListToUpdate = pluItems
+    // update specific object with new value
+    pluListToUpdate[index] = pluItemToUpdate
+    // update state with pluList including all values
+    setPluItems(pluListToUpdate)
   }
   
   const renderSpecificPLUItem = () => {
@@ -43,12 +60,12 @@ const PLU = () => {
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Title</h3>
-              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('title', event) }} value={specificPluItem.title}/>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('title', event, specificPluIndex) }} value={specificPluItem.title}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Group</h3>
-              <button className='edit-plu-item__list-button'><h2>{ specificPluItem.group }</h2></button>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('group', event, specificPluIndex) }} value={specificPluItem.group}/>
             </li>
             
             <li className='edit-plu-item__list-item'>
@@ -83,12 +100,12 @@ const PLU = () => {
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Display On Bar</h3>
-              <button className='edit-plu-item__list-button'><h2>{ renderTrueFalse(specificPluItem.display_bar) }</h2></button>
+              <button className='edit-plu-item__list-button'><h2>{ renderYesNo(specificPluItem.display_bar) }</h2></button>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Display on Kitchen</h3>
-              <button className='edit-plu-item__list-button'><h2>{ renderTrueFalse(specificPluItem.display_kitchen) }</h2></button>
+              <button className='edit-plu-item__list-button'><h2>{ renderYesNo(specificPluItem.display_kitchen) }</h2></button>
             </li>
             
             { displayDrinkOrFoodInfo(specificPluItem.group) }
@@ -110,7 +127,7 @@ const PLU = () => {
     }
   }
   
-  const renderTrueFalse = (booleanValue) => {
+  const renderYesNo = (booleanValue) => {
     if (booleanValue) {
       return 'YES'
     }
@@ -191,10 +208,46 @@ const PLU = () => {
     return rendering
   }
   
+  const closeSpecificPluWindow = () => {
+    const pluID = specificPluItem.plu
+    renderTrueFalse()
+    const pluToSend = preparePluForPut()
+    
+    
+    fetch(`http://localhost:6030/api/plus/${pluID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: pluToSend
+    })
+    setDisplayPLUItem('none');
+    setSpecificPluItem(null);
+    setSpecificPluIndex(null);
+    console.log(pluItems)
+  }
+  
+  const preparePluForPut = () => {
+    return JSON.stringify(specificPluItem)
+  }
+  
+  const renderTrueFalse = () => {
+    if (specificPluItem.display_bar == 'YES') {
+      specificPluItem.display_bar = true
+    } else {
+      specificPluItem.display_bar = false
+    }
+    if (specificPluItem.display_kitchen == 'YES') {
+      specificPluItem.display_kitchen = true
+    } else {
+      specificPluItem.display_kitchen = false
+    }
+  }
+  
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <div className='view-plu-item' style={{ display: displayPLUItem }}>
-        <button className='close-view-plu-item' onClick={() => { setDisplayPLUItem('none'); setSpecificPluItem(null) }}>X</button>
+        <button className='close-view-plu-item' onClick={() => { closeSpecificPluWindow() }}>X</button>
         { renderSpecificPLUItem() }
       </div>
       
