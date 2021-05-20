@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 
 import MainMenu from '../screens/MainMenu.js';
 import PLU from '../screens/PLU.js'
+import SettingsController from './SettingsController.js';
+
 import { AppContext } from '../contexts/AppContext.js'
 
 
@@ -18,6 +20,8 @@ const ScreenController = () => {
     return (
       <PLU></PLU>
     )
+  } else if (screen == 'settings') {
+    <SettingsController></SettingsController>
   }
 }
 
