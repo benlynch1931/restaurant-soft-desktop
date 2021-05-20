@@ -35,15 +35,7 @@ const PLU = () => {
     // The lines below fix that by adding it in and updating the state.
     // ------------------------------------------
     
-    // get object that needs the value added to
-    let pluItemToUpdate = pluItems[index]
-    pluItemToUpdate = { ...pluItemToUpdate, [key]: event.target.value }
-    // get whole PLU list
-    let pluListToUpdate = pluItems
-    // update specific object with new value
-    pluListToUpdate[index] = pluItemToUpdate
-    // update state with pluList including all values
-    setPluItems(pluListToUpdate)
+    updateObjectInStateArray(key, event.target.value, index)
   }
   
   const pluItemBooleanChange = (key, value, index) => {
@@ -52,6 +44,11 @@ const PLU = () => {
     delete specificPluItem[key]
     setSpecificPluItem({ ...specificPluItem, [key]: newValue })
     
+    // get object that needs the value added to
+    updateObjectInStateArray(key, newValue, index)
+  }
+  
+  const updateObjectInStateArray = (key, newValue, index) => {
     // get object that needs the value added to
     let pluItemToUpdate = pluItems[index]
     pluItemToUpdate = { ...pluItemToUpdate, [key]: newValue }
