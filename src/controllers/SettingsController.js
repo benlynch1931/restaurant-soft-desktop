@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 
-import MainMenu from '../screens/MainMenu.js';
-import PLU from '../screens/PLU.js'
+import MainSettings from '../screens/settings/MainSettings.js';
+import GroupsSettings from '../screens/settings/GroupsSettings.js'
+
 import { AppContext } from '../contexts/AppContext.js'
 
 
@@ -22,7 +23,11 @@ const SettingsController = () => {
     return (
       null
     )
-  } else if (settingsScreen == 'group-departments') {
+  } else if (settingsScreen == 'groups') {
+    return (
+      <GroupsSettings></GroupsSettings>
+    )
+  } else if (settingsScreen == 'departments') {
     return (
       null
     )
