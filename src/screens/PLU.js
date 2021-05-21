@@ -12,6 +12,9 @@ const PLU = () => {
   const [specificPluItem, setSpecificPluItem] = useState(null)
   const [specificPluIndex, setSpecificPluIndex] = useState(null)
   const [displayPLUItem, setDisplayPLUItem] = useState('none')
+  const [displayBackgroundColorOptions, setDisplayBackgroundColorOptions] = useState('none')
+  const [displayTextColorOptions, setDisplayTextColorOptions] = useState('none')
+  const [coloursOptions, setColoursOptions] = useState([])
   
   const pool = new Pool({
     user: process.env.DATABASE_USER,
@@ -24,6 +27,7 @@ const PLU = () => {
     const pluItem = pluItems[pluIndex]
     setSpecificPluIndex(pluIndex)
     setSpecificPluItem(pluItem)
+    fetchColours()
   }
   
   const pluItemValueChange = (key, event, index) => {
@@ -128,17 +132,86 @@ const PLU = () => {
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Background Colour</h3>
-              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('background', event, specificPluIndex) }} value={specificPluItem.background}/>
+              <div className='edit-plu-item__list-colour-div'>
+              <button className='edit-plu-item__list-colour-button' onClick={(event) => { setDisplayBackgroundColorOptions(displayBackgroundColorOptions == 'block' ? 'none' : 'block') }} style={{ backgroundColor: specificPluItem.background }}></button>
+                <div className='edit-plu-item__list-colour-dropdown' style={{ display: displayBackgroundColorOptions, width: '100%', height: 250 }}>
+                  <table style={{ width: '100%', height: 219, boxSizing: 'border-box' }}>
+                    <tbody style={{ width: '100%', height: 219 }}>
+                      { renderColourOptions('background') }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </li>
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Text Colour</h3>
-              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('text', event, specificPluIndex) }} value={specificPluItem.text}/>
+              <div className='edit-plu-item__list-colour-div'>
+              <button className='edit-plu-item__list-colour-button' onClick={(event) => { setDisplayTextColorOptions(displayTextColorOptions == 'block' ? 'none' : 'block') }} style={{ backgroundColor: specificPluItem.text }}></button>
+                <div className='edit-plu-item__list-colour-dropdown' style={{ display: displayTextColorOptions, width: '100%', height: 250 }}>
+                  <table style={{ width: '100%', height: 219, boxSizing: 'border-box' }}>
+                    <tbody style={{ width: '100%', height: 219 }}>
+                      { renderColourOptions('text') }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </li>
           </ul>
         </div>
       )
     }
+  }
+  
+  const renderColourOptions = (colourPropertyKey) => {
+    let rendering = []
+    let colourOptionRoot = Math.ceil(Math.sqrt(coloursOptions.length))
+    for (let row=0; row<colourOptionRoot; row++) {
+      let rowRender = renderColoursTableColumns(row, colourOptionRoot, colourPropertyKey)
+      rendering.push(<tr>{rowRender}</tr>)
+    }
+    return rendering
+  }
+  
+  const renderColoursTableColumns = (row, colourOptionRoot, colourPropertyKey) => {
+    let columnRendering = [];
+    for (let col=0; col<colourOptionRoot; col++) {
+      let backgroundColor = coloursOptions[(row*colourOptionRoot)+col].colour
+      let borderColor = isCurrentColour(coloursOptions[(row*colourOptionRoot)+col].colour, colourPropertyKey)
+      if ((row * colourOptionRoot) + col <= coloursOptions.length) {
+        columnRendering.push(<td className='colour-option-cell' style={{ width: `${100 / colourOptionRoot}%`, height: 219/colourOptionRoot, border: borderColor }}><button className='colour-option-button' onClick={() => { setDisplayBackgroundColorOptions('none'); handleNewColour(backgroundColor, colourPropertyKey) }} style={{ backgroundColor: backgroundColor, border: borderColor }}></button></td>)
+      } else {
+        columnRendering.push(<td className='colour-option-cell' style={{ width: `${100 / colourOptionRoot}%`, height: 219/colourOptionRoot }}></td>)
+      }
+    }
+    return columnRendering;
+  }
+  
+  const handleNewColour = (colour, key) => {
+    delete specificPluItem[key]
+    setSpecificPluItem({ ...specificPluItem, [key]: colour })
+    
+    updateObjectInStateArray(key, colour, specificPluIndex)
+  }
+  
+  const isCurrentColour = (optionColour, key) => {
+    if (optionColour === specificPluItem[key]) {
+      return '2px solid #FF0000'
+    }
+    return '2px solid rgb(118, 118, 118)'
+  }
+  
+  const fetchColours = () => {
+    fetch('http://localhost:6030/api/colours', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      setColoursOptions(data.colours)
+    })
   }
   
   const renderYesNo = (booleanValue) => {
@@ -150,7 +223,7 @@ const PLU = () => {
   
   const displayDrinkOrFoodInfo = (group) => {
     let rendering = []
-    if (group.toLowerCase() == 'drink') {
+    if (group.toLowerCase() == 'drinks') {
       rendering.push(
         <li className='edit-plu-item__list-item'>
           <h3>ABV</h3>
