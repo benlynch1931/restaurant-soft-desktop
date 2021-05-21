@@ -15,7 +15,9 @@ const PLU = () => {
   const [displayPLUItem, setDisplayPLUItem] = useState('none')
   const [displayBackgroundColorOptions, setDisplayBackgroundColorOptions] = useState('none')
   const [displayTextColorOptions, setDisplayTextColorOptions] = useState('none')
+  const [displayDepartments, setDisplayDepartments] = useState('none')
   const [coloursOptions, setColoursOptions] = useState([])
+  const [departmentsOptions, setDepartmentsOptions] = useState([])
   
   const pool = new Pool({
     user: process.env.DATABASE_USER,
@@ -29,6 +31,7 @@ const PLU = () => {
     setSpecificPluIndex(pluIndex)
     setSpecificPluItem(pluItem)
     fetchColours()
+    fetchDepartments()
   }
   
   const pluItemValueChange = (key, event, index) => {
@@ -89,7 +92,14 @@ const PLU = () => {
             
             <li className='edit-plu-item__list-item'>
               <h3 className='edit-plu-item__list-label'>Department</h3>
-              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('department', event, specificPluIndex) }} value={specificPluItem.department}/>
+              <div className='edit-plu-item__list-department-div'>
+              <button className='edit-plu-item__list-department-button' onClick={(event) => { setDisplayDepartments(displayDepartments == 'block' ? 'none' : 'block') }}>{ specificPluItem.department.name }</button>
+                <div className='edit-plu-item__list-department-dropdown' style={{ display: displayDepartments }}>
+                  <ul style={{ width: '90%', marginLeft: '5%' }}>
+                    { renderDepartmentsList() }
+                  </ul>
+                </div>
+              </div>
             </li>
             
             <li className='edit-plu-item__list-item'>
@@ -164,6 +174,30 @@ const PLU = () => {
     }
   }
   
+  const renderDepartmentsList = () => {
+    let rendering = []
+    
+    departmentsOptions.forEach((department, idx) => {
+      rendering.push(
+        <li>
+          <button onClick={() => { setDisplayDepartments('none'); handleNewDepartment(department.name, department.index) }}>{ department.name }</button>
+        </li>
+      )
+    });
+  
+    return rendering;
+  }
+  
+  const handleNewDepartment = (departmentName, departmentID) => {
+    if (departmentID !== specificPluItem.department.index) {
+      setPluItemUpdated(true)
+      delete specificPluItem['department']
+      setSpecificPluItem({ ...specificPluItem, department: { id: departmentID, name: departmentName } })
+      
+      updateObjectInStateArray('department', { id: departmentID, name: departmentName }, specificPluIndex)
+    }
+  }
+  
   const renderColourOptions = (colourPropertyKey) => {
     let rendering = []
     let colourOptionRoot = Math.ceil(Math.sqrt(coloursOptions.length))
@@ -215,6 +249,19 @@ const PLU = () => {
     .then(res => res.json())
     .then(data => {
       setColoursOptions(data.colours)
+    })
+  }
+  
+  const fetchDepartments = () => {
+    fetch('http://localhost:6030/api/departments', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      setDepartmentsOptions(data.departments)
     })
   }
   
@@ -318,7 +365,6 @@ const PLU = () => {
     setDisplayPLUItem('none');
     setSpecificPluItem(null);
     setSpecificPluIndex(null);
-    console.log(pluItems)
   }
   
   const preparePluForPut = () => {
