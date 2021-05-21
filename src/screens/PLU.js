@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Keyboard from 'react-simple-keyboard';
 
@@ -338,6 +338,10 @@ const PLU = () => {
     }
   }
   
+  useEffect(() => {
+    getPLUItems()
+  }, [])
+  
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <div className='view-plu-item' style={{ display: displayPLUItem }}>
@@ -346,7 +350,6 @@ const PLU = () => {
       </div>
       
       <h1 style={{ textAlign: 'center' }}>PLU</h1>
-      <button onClick={() => {getPLUItems()}}>Test</button>
       <ul className='plu-list'>
         { renderPLUItems() }
       </ul>
