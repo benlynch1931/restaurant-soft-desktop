@@ -10,6 +10,7 @@ const PLU = () => {
   
   const [pluItems, setPluItems] = useState([])
   const [specificPluItem, setSpecificPluItem] = useState(null)
+  const [pluItemUpdated, setPluItemUpdated] = useState(false)
   const [specificPluIndex, setSpecificPluIndex] = useState(null)
   const [displayPLUItem, setDisplayPLUItem] = useState('none')
   const [displayBackgroundColorOptions, setDisplayBackgroundColorOptions] = useState('none')
@@ -43,7 +44,6 @@ const PLU = () => {
   }
   
   const pluItemBooleanChange = (key, value, index) => {
-    console.log('value' + value)
     let newValue = !value
     delete specificPluItem[key]
     setSpecificPluItem({ ...specificPluItem, [key]: newValue })
@@ -53,6 +53,7 @@ const PLU = () => {
   }
   
   const updateObjectInStateArray = (key, newValue, index) => {
+    setPluItemUpdated(true)
     // get object that needs the value added to
     let pluItemToUpdate = pluItems[index]
     pluItemToUpdate = { ...pluItemToUpdate, [key]: newValue }
@@ -188,10 +189,13 @@ const PLU = () => {
   }
   
   const handleNewColour = (colour, key) => {
-    delete specificPluItem[key]
-    setSpecificPluItem({ ...specificPluItem, [key]: colour })
-    
-    updateObjectInStateArray(key, colour, specificPluIndex)
+    if (colour !== specificPluItem[key]) {
+      setPluItemUpdated(true)
+      delete specificPluItem[key]
+      setSpecificPluItem({ ...specificPluItem, [key]: colour })
+      
+      updateObjectInStateArray(key, colour, specificPluIndex)
+    }
   }
   
   const isCurrentColour = (optionColour, key) => {
@@ -300,14 +304,17 @@ const PLU = () => {
     renderTrueFalse()
     const pluToSend = preparePluForPut()
     
+    if (pluItemUpdated === true) {
+      fetch(`http://localhost:6030/api/plus/${pluID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: pluToSend
+      })
+      setPluItemUpdated(false)
+    }
     
-    fetch(`http://localhost:6030/api/plus/${pluID}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: pluToSend
-    })
     setDisplayPLUItem('none');
     setSpecificPluItem(null);
     setSpecificPluIndex(null);
