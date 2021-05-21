@@ -105,6 +105,22 @@
   padding: 0;
 }
 
+.edit-plu-item__list-colour-dropdown table {
+  width: 100%;
+  height: 219px;
+  box-sizing: border-box;
+}
+
+.edit-plu-item__list-colour-dropdown tbody {
+  width: 100%;
+  height: 219px;
+}
+
+.edit-plu-item__list-colour-dropdown {
+  width: 100%;
+  height: 250px;
+}
+
 .edit-plu-item__list-button {
   background-color: rgba(0, 0, 0, 0);
   border: none;

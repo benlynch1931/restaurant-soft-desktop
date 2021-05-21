@@ -134,9 +134,9 @@ const PLU = () => {
               <h3 className='edit-plu-item__list-label'>Background Colour</h3>
               <div className='edit-plu-item__list-colour-div'>
               <button className='edit-plu-item__list-colour-button' onClick={(event) => { setDisplayBackgroundColorOptions(displayBackgroundColorOptions == 'block' ? 'none' : 'block') }} style={{ backgroundColor: specificPluItem.background }}></button>
-                <div className='edit-plu-item__list-colour-dropdown' style={{ display: displayBackgroundColorOptions, width: '100%', height: 250 }}>
-                  <table style={{ width: '100%', height: 219, boxSizing: 'border-box' }}>
-                    <tbody style={{ width: '100%', height: 219 }}>
+                <div className='edit-plu-item__list-colour-dropdown' style={{ display: displayBackgroundColorOptions }}>
+                  <table>
+                    <tbody>
                       { renderColourOptions('background') }
                     </tbody>
                   </table>
@@ -148,9 +148,9 @@ const PLU = () => {
               <h3 className='edit-plu-item__list-label'>Text Colour</h3>
               <div className='edit-plu-item__list-colour-div'>
               <button className='edit-plu-item__list-colour-button' onClick={(event) => { setDisplayTextColorOptions(displayTextColorOptions == 'block' ? 'none' : 'block') }} style={{ backgroundColor: specificPluItem.text }}></button>
-                <div className='edit-plu-item__list-colour-dropdown' style={{ display: displayTextColorOptions, width: '100%', height: 250 }}>
-                  <table style={{ width: '100%', height: 219, boxSizing: 'border-box' }}>
-                    <tbody style={{ width: '100%', height: 219 }}>
+                <div className='edit-plu-item__list-colour-dropdown' style={{ display: displayTextColorOptions }}>
+                  <table>
+                    <tbody>
                       { renderColourOptions('text') }
                     </tbody>
                   </table>
