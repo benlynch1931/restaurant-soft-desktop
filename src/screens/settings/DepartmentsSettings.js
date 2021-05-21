@@ -12,6 +12,8 @@ const DepartmentsSettings = () => {
   const [specificDepartmentItem, setSpecificDepartmentItem] = useState(null)
   const [specificDepartmentIndex, setSpecificDepartmentIndex] = useState(null)
   const [displayDepartmentItem, setDisplayDepartmentItem] = useState('none')
+  const [displayGroups, setDisplayGroups] = useState('none')
+  const [groupsOptions, setGroupsOptions] = useState([])
   
   const pool = new Pool({
     user: process.env.DATABASE_USER,
@@ -24,6 +26,7 @@ const DepartmentsSettings = () => {
     const department = departments[departmentIndex]
     setSpecificDepartmentIndex(departmentIndex)
     setSpecificDepartmentItem(department)
+    fetchGroups()
   }
   
   const departmentValueChange = (key, event, index) => {
@@ -73,7 +76,19 @@ const DepartmentsSettings = () => {
             
             <li className='edit-department-item__list-item'>
               <h3 className='edit-department-item__list-label'>Department</h3>
-              <input className='edit-department-item__list-input' onChange={(event) => { departmentValueChange('department', event, specificDepartmentIndex) }} value={specificDepartmentItem.department}/>
+              <input className='edit-department-item__list-input' onChange={(event) => { departmentValueChange('name', event, specificDepartmentIndex) }} value={specificDepartmentItem.name}/>
+            </li>
+            
+            <li className='edit-department-item__list-item'>
+              <h3 className='edit-department-item__list-label'>Group</h3>
+              <div className='edit-plu-item__list-department-div'>
+              <button className='edit-plu-item__list-department-button' onClick={(event) => { setDisplayGroups(displayGroups == 'block' ? 'none' : 'block') }}>{ specificDepartmentItem.group.name }</button>
+                <div className='edit-plu-item__list-department-dropdown' style={{ display: displayGroups }}>
+                  <ul style={{ width: '90%', marginLeft: '5%' }}>
+                    { renderGroupsList() }
+                  </ul>
+                </div>
+              </div>
             </li>
             
             <li className='edit-department-item__list-item'>
@@ -85,6 +100,43 @@ const DepartmentsSettings = () => {
         </div>
       )
     }
+  }
+  
+  const renderGroupsList = () => {
+    let rendering = []
+    
+    groupsOptions.forEach((group, idx) => {
+      rendering.push(
+        <li>
+          <button onClick={() => { setDisplayGroups('none'); handleNewGroup(group.name, group.index) }}>{ group.name }</button>
+        </li>
+      )
+    });
+  
+    return rendering;
+  }
+  
+  const handleNewGroup = (groupName, groupID) => {
+    if (groupID !== specificDepartmentItem.group.index) {
+      // setPluItemUpdated(true)
+      delete specificDepartmentItem['group']
+      setSpecificDepartmentItem({ ...specificDepartmentItem, group: { id: groupID, name: groupName } })
+      
+      updateObjectInStateArray('group', { id: groupID, name: groupName }, specificDepartmentIndex)
+    }
+  }
+  
+  const fetchGroups = () => {
+    fetch('http://localhost:6030/api/groups', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      setGroupsOptions(data.groups)
+    })
   }
   
   const renderYesNo = (booleanValue) => {
@@ -116,7 +168,7 @@ const DepartmentsSettings = () => {
         <li id={`container ${idx}`}>
         <button style={{ width: '100%', display: 'flex', flexDirection: 'row' }} onClick={() => { getSpecificDepartment(idx); setDisplayDepartmentItem('block') }}>
           <h2 className='item-department'>{item.index}</h2>
-          <h2>{item.department}</h2>
+          <h2>{item.name}</h2>
         </button>
         </li>
       )
