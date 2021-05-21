@@ -47,7 +47,6 @@ const DepartmentsSettings = () => {
     updateObjectInStateArray(key, newValue, index)
   }
   
-  
   const updateObjectInStateArray = (key, newValue, index) => {
     // get object that needs the value added to
     let departmentToUpdate = departments[index]
@@ -129,7 +128,6 @@ const DepartmentsSettings = () => {
     const departmentID = specificDepartmentItem.index
     renderTrueFalse()
     const departmentToSend = prepareDepartmentForPut()
-    
     
     fetch(`http://localhost:6030/api/department/${departmentID}`, {
       method: 'PUT',
