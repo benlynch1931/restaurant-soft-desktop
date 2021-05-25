@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import Keyboard from 'react-simple-keyboard';
+
+import { AppContext } from '../../contexts/AppContext.js'
 
 import '../../styles/GroupsSettings.css';
 const Pool = require('pg').Pool
 
 
 const GroupsSettings = () => {
+  
+  const { setSettingsScreen, setScreen } = useContext(AppContext);
   
   const [groups, setGroups] = useState([])
   const [specificGroupItem, setSpecificGroupItem] = useState(null)
@@ -259,6 +263,9 @@ const GroupsSettings = () => {
       <ul className='group-list'>
         { renderGroups() }
       </ul>
+      <div className="settings-menu-rows">
+        <button className="settings-menu-buttons" onClick={() => { setSettingsScreen('main') }}><h2>BACK</h2></button>
+      </div>
     </div>
   )
 }

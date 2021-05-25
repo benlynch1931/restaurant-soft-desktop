@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import Keyboard from 'react-simple-keyboard';
+
+import { AppContext } from '../../contexts/AppContext.js'
 
 import '../../styles/DepartmentsSettings.css';
 const Pool = require('pg').Pool
 
 
 const DepartmentsSettings = () => {
+  
+  const { setSettingsScreen, setScreen } = useContext(AppContext);
   
   const [departments, setDepartments] = useState([])
   const [specificDepartmentItem, setSpecificDepartmentItem] = useState(null)
@@ -305,6 +309,9 @@ const DepartmentsSettings = () => {
       <ul className='department-list'>
         { renderDepartments() }
       </ul>
+      <div className="settings-menu-rows">
+        <button className="settings-menu-buttons" onClick={() => { setSettingsScreen('main') }}><h2>BACK</h2></button>
+      </div>
     </div>
   )
 }
