@@ -12,6 +12,10 @@ const GroupsSettings = () => {
   const [specificGroupItem, setSpecificGroupItem] = useState(null)
   const [specificGroupIndex, setSpecificGroupIndex] = useState(null)
   const [displayGroupItem, setDisplayGroupItem] = useState('none')
+  const [coloursOptions, setColoursOptions] = useState([])
+  const [displayBackgroundColorOptions, setDisplayBackgroundColorOptions] = useState('none')
+  const [displayTextColorOptions, setDisplayTextColorOptions] = useState('none')
+  const [groupUpdated, setGroupUpdated] = useState(false)
   
   const pool = new Pool({
     user: process.env.DATABASE_USER,
@@ -81,11 +85,93 @@ const GroupsSettings = () => {
               <h3 className='edit-group-item__list-label'>Allow Report Printing</h3>
               <button className='edit-group-item__list-input-button' onClick={(event) => { groupBooleanChange('allow_report_printing', specificGroupItem.allow_report_printing, specificGroupIndex) }}>{ renderYesNo(specificGroupItem.allow_report_printing) }</button>
             </li>
+            
+            <li className='edit-group-item__list-item'>
+              <h3 className='edit-group-item__list-label'>Background Colour</h3>
+              <div className='edit-group-item__list-colour-div'>
+              <button className='edit-group-item__list-colour-button' onClick={(event) => { setDisplayBackgroundColorOptions(displayBackgroundColorOptions == 'block' ? 'none' : 'block') }} style={{ backgroundColor: specificGroupItem.background }}></button>
+                <div className='edit-group-item__list-colour-dropdown' style={{ display: displayBackgroundColorOptions }}>
+                  <table>
+                    <tbody>
+                      { renderColourOptions('background') }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </li>
+            
+            <li className='edit-group-item__list-item'>
+              <h3 className='edit-group-item__list-label'>Text Colour</h3>
+              <div className='edit-group-item__list-colour-div'>
+              <button className='edit-group-item__list-colour-button' onClick={(event) => { setDisplayTextColorOptions(displayTextColorOptions == 'block' ? 'none' : 'block') }} style={{ backgroundColor: specificGroupItem.text }}></button>
+                <div className='edit-group-item__list-colour-dropdown' style={{ display: displayTextColorOptions }}>
+                  <table>
+                    <tbody>
+                      { renderColourOptions('text') }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </li>
           </ul>
 
         </div>
       )
     }
+  }
+  
+  const fetchColours = () => {
+    fetch('http://192.168.1.213:6030/api/colours', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      setColoursOptions(data.colours)
+    })
+  }
+  
+  const renderColourOptions = (colourPropertyKey) => {
+    let rendering = []
+    let colourOptionRoot = Math.ceil(Math.sqrt(coloursOptions.length))
+    for (let row=0; row<colourOptionRoot; row++) {
+      let rowRender = renderColoursTableColumns(row, colourOptionRoot, colourPropertyKey)
+      rendering.push(<tr>{rowRender}</tr>)
+    }
+    return rendering
+  }
+  
+  const renderColoursTableColumns = (row, colourOptionRoot, colourPropertyKey) => {
+    let columnRendering = [];
+    for (let col=0; col<colourOptionRoot; col++) {
+      let backgroundColor = coloursOptions[(row*colourOptionRoot)+col].colour
+      let borderColor = isCurrentColour(coloursOptions[(row*colourOptionRoot)+col].colour, colourPropertyKey)
+      if ((row * colourOptionRoot) + col <= coloursOptions.length) {
+        columnRendering.push(<td className='colour-option-cell' style={{ width: `${100 / colourOptionRoot}%`, height: 219/colourOptionRoot, border: borderColor }}><button className='colour-option-button' onClick={() => { setDisplayBackgroundColorOptions('none'); handleNewColour(backgroundColor, colourPropertyKey) }} style={{ backgroundColor: backgroundColor, border: borderColor }}></button></td>)
+      } else {
+        columnRendering.push(<td className='colour-option-cell' style={{ width: `${100 / colourOptionRoot}%`, height: 219/colourOptionRoot }}></td>)
+      }
+    }
+    return columnRendering;
+  }
+  
+  const handleNewColour = (colour, key) => {
+    if (colour !== specificGroupItem[key]) {
+      setGroupUpdated(true)
+      delete specificGroupItem[key]
+      setSpecificGroupItem({ ...specificGroupItem, [key]: colour })
+      
+      updateObjectInStateArray(key, colour, specificGroupIndex)
+    }
+  }
+  
+  const isCurrentColour = (optionColour, key) => {
+    if (optionColour === specificGroupItem[key]) {
+      return '2px solid #FF0000'
+    }
+    return '2px solid rgb(118, 118, 118)'
   }
   
   const renderYesNo = (booleanValue) => {
