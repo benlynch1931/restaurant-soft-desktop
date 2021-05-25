@@ -240,7 +240,7 @@ const PLU = () => {
   }
   
   const fetchColours = () => {
-    fetch('http://localhost:6030/api/colours', {
+    fetch('http://192.168.1.213:6030/api/colours', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -253,7 +253,7 @@ const PLU = () => {
   }
   
   const fetchDepartments = () => {
-    fetch('http://localhost:6030/api/departments', {
+    fetch('http://192.168.1.213:6030/api/departments', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -304,7 +304,7 @@ const PLU = () => {
   
   
   const getPLUItems = () => {
-    fetch('http://localhost:6030/api/plus', {
+    fetch('http://192.168.1.213:6030/api/plus', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -352,7 +352,7 @@ const PLU = () => {
     const pluToSend = preparePluForPut()
     
     if (pluItemUpdated === true) {
-      fetch(`http://localhost:6030/api/plus/${pluID}`, {
+      fetch(`http://192.168.1.213:6030/api/plus/${pluID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
