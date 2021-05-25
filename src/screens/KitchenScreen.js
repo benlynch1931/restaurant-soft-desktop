@@ -101,6 +101,7 @@ const KitchenScreen = () => {
   return (
     <div style={{ position: 'fixed', width: '100%', minHeight: '100%', backgroundColor: '#E9E9E9' }}>
       <div className='kitchen-navbar'>
+        <h1 className='kitchen-navbar-title'>Kitchen</h1>
         <button className='kitchen-back-button' onClick={() => { setScreen('main') }}>
           <h1>Back</h1>
         </button>

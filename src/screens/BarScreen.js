@@ -101,6 +101,7 @@ const BarScreen = () => {
   return (
     <div style={{ position: 'fixed', width: '100%', minHeight: '100%', backgroundColor: '#E9E9E9' }}>
       <div className='bar-navbar'>
+      <h1 className='bar-navbar-title'>Bar</h1>
         <button className='bar-back-button' onClick={() => { setScreen('main') }}>
           <h1>Back</h1>
         </button>

@@ -4,6 +4,15 @@
   width: 100%;
   /* border: 1px solid #000000; */
   box-shadow: 0 0 20px 3px #919191;
+  position: relative;
+}
+
+.kitchen-navbar-title {
+  position: absolute;
+  line-height: 1;
+  margin-left: 50%;
+  margin-top: 50px;
+  transform: translate(-50%, -50%);
 }
 
 .kitchen-back-button {

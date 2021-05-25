@@ -6,6 +6,14 @@
   box-shadow: 0 0 20px 3px #919191;
 }
 
+.bar-navbar-title {
+  position: absolute;
+  line-height: 1;
+  margin-left: 50%;
+  margin-top: 50px;
+  transform: translate(-50%, -50%);
+}
+
 .bar-back-button {
   position: fixed;
   right: 0;
