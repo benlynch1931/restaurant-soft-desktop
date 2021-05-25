@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Keyboard from 'react-simple-keyboard';
 
@@ -96,7 +96,7 @@ const GroupsSettings = () => {
   }
   
   const getGroups = () => {
-    fetch('http://localhost:6030/api/groups', {
+    fetch('http://192.168.1.213:6030/api/groups', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ const GroupsSettings = () => {
     const groupToSend = prepareGroupForPut()
     
     
-    fetch(`http://localhost:6030/api/groups/${groupID}`, {
+    fetch(`http://192.168.1.213:6030/api/groups/${groupID}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -154,6 +154,10 @@ const GroupsSettings = () => {
     }
   }
   
+  useEffect(() => {
+    getGroups()
+  }, [])
+  
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <div className='view-group-item' style={{ display: displayGroupItem }}>
@@ -162,7 +166,6 @@ const GroupsSettings = () => {
       </div>
       
       <h1 style={{ textAlign: 'center' }}>Groups</h1>
-      <button onClick={() => {getGroups()}}>Test</button>
       <ul className='group-list'>
         { renderGroups() }
       </ul>
