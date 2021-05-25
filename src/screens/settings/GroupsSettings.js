@@ -215,14 +215,18 @@ const GroupsSettings = () => {
     renderTrueFalse()
     const groupToSend = prepareGroupForPut()
     
+    if (groupUpdated === true) {
+      
+      fetch(`http://192.168.1.213:6030/api/groups/${groupID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: groupToSend
+      })
+      setGroupUpdated(false)
+    }
     
-    fetch(`http://192.168.1.213:6030/api/groups/${groupID}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: groupToSend
-    })
     setDisplayGroupItem('none');
     setSpecificGroupItem(null);
     setSpecificGroupIndex(null);
