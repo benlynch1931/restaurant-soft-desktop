@@ -10,8 +10,8 @@ const MainMenu = () => {
   return (
     <div>
       <div className="menu-rows">
-        <button className="menu-buttons" onClick={() => { setScreen('main') }}><h2>Drinks</h2></button>
-        <button className="menu-buttons" onClick={() => { setScreen('main') }}><h2>Food</h2></button>
+        <button className="menu-buttons" onClick={() => { setScreen('bar') }}><h2>Bar</h2></button>
+        <button className="menu-buttons" onClick={() => { setScreen('main') }}><h2>Kitchen</h2></button>
       </div>
       <div className="menu-rows">
         <button className="menu-buttons" onClick={() => { setScreen('settings') }}><h2>Settings</h2></button>
