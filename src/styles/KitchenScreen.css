@@ -1,0 +1,97 @@
+.kitchen-navbar {
+  background-color: #FFFFFF;
+  height: 100px;
+  width: 100%;
+  /* border: 1px solid #000000; */
+  box-shadow: 0 0 20px 3px #919191;
+}
+
+.kitchen-back-button {
+  position: fixed;
+  right: 0;
+  height: 100px;
+  width: 20%;
+  border: none;
+  border-left: 1px solid #000000;
+}
+
+.kitchen-back-button {
+  line-height: 22px;
+  font-size: 22px;
+}
+
+.kitchen-main-display {
+  max-height: calc(100vh - 100px);
+  width: 100%;
+  flex-flow: row wrap;
+  display: flex;
+  /* border: 1px solid #000000; */
+  overflow-y: auto;
+}
+
+.kitchen-tickets {
+  margin: 3%;
+  flex: 0 0 19%;
+  /* width: ; */
+  min-height: 270px;
+  background-color: #FFFFFF;
+  
+  position: relative;
+}
+
+.kitchen-tickets-header {
+  height: 50px;
+  width: 100%;
+  background-color: #616161;
+  color: #FFFFFF;
+  position: relative;
+}
+
+.kitchen-tickets-header-table, .kitchen-tickets-header-time, .kitchen-tickets-footer-price, .kitchen-tickets-footer-print {
+  line-height: 1;
+  font-size: 20px;
+  margin-top: 15px;
+  position: absolute;
+}
+
+.kitchen-tickets-header-table {
+  left: 5px
+}
+
+.kitchen-tickets-header-time {
+  right: 5px;
+}
+
+.kitchen-tickets-main {
+  min-height: 170px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+}
+
+.kitchen-tickets-main-order-items {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+}
+
+.kitchen-tickets-footer {
+  height: 50px;
+  width: 100%;
+  background-color: #616161;
+  color: #FFFFFF;
+  position: relative;
+}
+
+.kitchen-tickets-footer-price {
+  right: 5px;
+}
+
+.kitchen-tickets-footer-print {
+  height: 100%;
+  margin-top: 0;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  color: #FFFFFF;
+}
