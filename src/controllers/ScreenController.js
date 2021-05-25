@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 
 import MainMenu from '../screens/MainMenu.js';
 import BarScreen from '../screens/BarScreen.js';
+import KitchenScreen from '../screens/KitchenScreen.js';
 import PLU from '../screens/PLU.js'
 import SettingsController from './SettingsController.js';
 
@@ -28,6 +29,10 @@ const ScreenController = () => {
   } else if (screen === 'bar') {
     return (
       <BarScreen></BarScreen>
+    )
+  } else if (screen === 'kitchen') {
+    return (
+      <KitchenScreen></KitchenScreen>
     )
   }
 }
