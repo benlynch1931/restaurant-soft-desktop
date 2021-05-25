@@ -19,7 +19,6 @@ const MainSettings = () => {
       </div>
       <div className="settings-menu-rows">
         <button className="settings-menu-buttons" onClick={() => { setScreen('main') }}><h2>BACK</h2></button>
-        {/*<button className="settings-menu-buttons" onClick={() => { setScreen('main') }}><h2>BACK</h2></button>*/}
       </div>
     </div>
   )
