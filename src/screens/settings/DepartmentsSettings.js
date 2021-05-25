@@ -137,7 +137,7 @@ const DepartmentsSettings = () => {
               <div className='edit-department-item__list-group-div'>
               <button className='edit-department-item__list-group-button' onClick={(event) => { setDisplayGroups(displayGroups == 'block' ? 'none' : 'block') }}>{ specificDepartmentItem.group.name }</button>
                 <div className='edit-department-item__list-group-dropdown' style={{ display: displayGroups }}>
-                  <ul style={{ width: '90%', marginLeft: '5%' }}>
+                  <ul style={{ width: '90%', marginLeft: 0, padding: 0 }}>
                     { renderGroupsList() }
                   </ul>
                 </div>
@@ -185,11 +185,12 @@ const DepartmentsSettings = () => {
   
   const renderGroupsList = () => {
     let rendering = []
+    console.log(groupsOptions)
     
     groupsOptions.forEach((group, idx) => {
       rendering.push(
         <li>
-          <button onClick={() => { setDisplayGroups('none'); handleNewGroup(group.name, group.index) }}>{ group.name }</button>
+          <button onClick={() => { setDisplayGroups('none'); handleNewGroup(group.name, group.index) }}>{ group.group }</button>
         </li>
       )
     });
