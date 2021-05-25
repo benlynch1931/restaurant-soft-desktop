@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 
-import '../styles/BarScreen.css'
+import '../styles/KitchenScreen.css'
 
 import { AppContext } from '../contexts/AppContext.js'
 
 
-const BarScreen = () => {
+const KitchenScreen = () => {
   
   const { setScreen } = useContext(AppContext);
   
@@ -77,7 +77,7 @@ const BarScreen = () => {
     let orderItemsRendering = []
     let orderItemsObject = {}
     basket.forEach((item, i) => {
-      if (item.displayBar) {
+      if (item.displayKitchen) {
         // if the property/item isn't in the object yet, add it before adding to the number of items
         if (!(item.label in orderItemsObject)) {
           // create the item property
@@ -143,4 +143,4 @@ const BarScreen = () => {
   )
 }
 
-export default BarScreen;
+export default KitchenScreen;
