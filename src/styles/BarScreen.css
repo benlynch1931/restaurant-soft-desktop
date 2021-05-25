@@ -1,0 +1,97 @@
+.bar-navbar {
+  background-color: #FFFFFF;
+  height: 100px;
+  width: 100%;
+  /* border: 1px solid #000000; */
+  box-shadow: 0 0 20px 3px #919191;
+}
+
+.bar-back-button {
+  position: fixed;
+  right: 0;
+  height: 100px;
+  width: 20%;
+  border: none;
+  border-left: 1px solid #000000;
+}
+
+.bar-back-button {
+  line-height: 22px;
+  font-size: 22px;
+}
+
+.bar-main-display {
+  max-height: calc(100vh - 100px);
+  width: 100%;
+  flex-flow: row wrap;
+  display: flex;
+  /* border: 1px solid #000000; */
+  overflow-y: auto;
+}
+
+.bar-tickets {
+  margin: 3%;
+  flex: 0 0 19%;
+  /* width: ; */
+  min-height: 270px;
+  background-color: #FFFFFF;
+  
+  position: relative;
+}
+
+.bar-tickets-header {
+  height: 50px;
+  width: 100%;
+  background-color: #616161;
+  color: #FFFFFF;
+  position: relative;
+}
+
+.bar-tickets-header-table, .bar-tickets-header-time, .bar-tickets-footer-price, .bar-tickets-footer-print {
+  line-height: 1;
+  font-size: 20px;
+  margin-top: 15px;
+  position: absolute;
+}
+
+.bar-tickets-header-table {
+  left: 5px
+}
+
+.bar-tickets-header-time {
+  right: 5px;
+}
+
+.bar-tickets-main {
+  min-height: 170px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+}
+
+.bar-tickets-main-order-items {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+}
+
+.bar-tickets-footer {
+  height: 50px;
+  width: 100%;
+  background-color: #616161;
+  color: #FFFFFF;
+  position: relative;
+}
+
+.bar-tickets-footer-price {
+  right: 5px;
+}
+
+.bar-tickets-footer-print {
+  height: 100%;
+  margin-top: 0;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  color: #FFFFFF;
+}
