@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Keyboard from 'react-simple-keyboard';
 
@@ -290,6 +290,10 @@ const DepartmentsSettings = () => {
     }
   }
   
+  useEffect(() => {
+    getDepartments()
+  }, [])
+  
   return (
     <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <div className='view-department-item' style={{ display: displayDepartmentItem }}>
@@ -298,7 +302,6 @@ const DepartmentsSettings = () => {
       </div>
       
       <h1 style={{ textAlign: 'center' }}>Departments</h1>
-      <button onClick={() => {getDepartments()}}>Test</button>
       <ul className='department-list'>
         { renderDepartments() }
       </ul>
