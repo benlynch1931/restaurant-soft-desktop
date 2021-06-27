@@ -1,42 +1,128 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import '../styles/BarScreen.css'
 
+import { orderStore } from '../contexts/OrderStore.js'
 import { AppContext } from '../contexts/AppContext.js'
 
+// const DOMAIN = "92.16.101.121"
+const DOMAIN = "192.168.1.213"
 
 const BarScreen = () => {
   
   const { setScreen } = useContext(AppContext);
+  const [orders, setOrders] = useState([])
   
-  const orders = [
-    {
-      name: '',
-      number: 3,
-      time: '19:23',
-      total: 7.55,
-      basket: [
-        {
-          label: 'Tribute',
-          price: 3.75,
-          displayBar: true,
-          displayKitchen: false
-        },
-        {
-          label: 'Haze',
-          price: 3.80,
-          displayBar: true,
-          displayKitchen: false
-        },
-        {
-          label: 'KITCHEN',
-          price: 0,
-          displayBar: false,
-          displayKitchen: true
-        }
-      ]
+  // const orders = [
+  //   {
+  //     name: '',
+  //     number: 3,
+  //     time: '19:23',
+  //     total: 11.25,
+  //     basket: "label:Tribute,quantity:3,price:3.75,displayBar:true,displayKitchen:false;label:Haze,quantity:10,price:3.8,displayBar:true,displayKitchen:false"
+  //     // basket: [
+  //     //   {
+  //     //     label: 'Tribute',
+  //     //     price: 3.75,
+  //     //     displayBar: true,
+  //     //     displayKitchen: false
+  //     //   },
+  //     //   {
+  //     //     label: 'Haze',
+  //     //     price: 3.80,
+  //     //     displayBar: true,
+  //     //     displayKitchen: false
+  //     //   },
+  //     //   {
+  //     //     label: 'KITCHEN',
+  //     //     price: 0,
+  //     //     displayBar: false,
+  //     //     displayKitchen: true
+  //     //   }
+  //     // ]
+  //   }
+  // ]
+  
+  const fetchOrders = () => {
+    fetch(`http://${DOMAIN}:6030/api/orders`, {
+      method: 'GET', 
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => res.json())
+    .then(data => formatOrders(data.orders))
+    // .then(data => console.log(data.orders))
+    
+    // Continually check database for new orders. 60000 = 1 minute
+    setTimeout(() => {
+      fetchOrders()
+    }, 60000)
+  }
+  
+  useEffect(() => {
+    fetchOrders()
+  }, [])
+  
+  const formatOrders = (orders) => {
+    let formattedOrders = []
+    
+    orders.forEach((order, idx) => {
+      order.total = convertValue(['total', order.total])
+      order.orders = extractBasketInfo(order.orders)
+      // from 2021-06-26 17:10:00.142392 TO 17:10
+      const time = order.order_time.split('T')[1].split('.')[0].split(':')
+      order.order_time = `${time[0]}:${time[1]}`
+      order.is_paid = convertValue('is_paid', [order.is_paid])
+      formattedOrders.push(order)
+    })
+    
+    setOrders(formattedOrders)
+  }
+  
+  const extractBasketInfo = (orderBasket) => {
+    const formattedBasket = []
+    const separateItems = orderBasket.split(';')
+    separateItems.forEach((item, idx) => {
+      const itemInfoSplit = item.split(',')
+      formattedBasket.push({
+          [itemInfoSplit[0].split(':')[0]]: convertValue(itemInfoSplit[0].split(':')),
+          [itemInfoSplit[1].split(':')[0]]: convertValue(itemInfoSplit[1].split(':')),
+          [itemInfoSplit[2].split(':')[0]]: convertValue(itemInfoSplit[2].split(':')),
+          [itemInfoSplit[3].split(':')[0]]: convertValue(itemInfoSplit[3].split(':')),
+          [itemInfoSplit[4].split(':')[0]]: convertValue(itemInfoSplit[4].split(':'))
+        })
+    });
+
+    return formattedBasket;
+      
+  }
+  
+  const convertValue = ([key, value]) => {
+     if (key === 'displayBar' || key === 'displayKitchen' || key === 'is_paid') {
+      return stringToBoolean(value)
+    } else if (key === 'price' || key === 'total') {
+      return stringToFloat(value)
+    } else {
+      return value
     }
-  ]
+  }
+  
+  const stringToBoolean = (string) => {
+    if (string === 'true') {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  const stringToFloat = (string) => {
+    return parseFloat(string)
+  }
+
+  const stringToInteger = (string) => {
+    return parseInt(string)
+  }
   
   const iterateOrders = () => {
     let orderRendering = []
@@ -54,18 +140,19 @@ const BarScreen = () => {
         <div className='bar-tickets'>
         
           <div className='bar-tickets-header'>
-            <h1 className='bar-tickets-header-table'>Table { order.number }</h1>
-            <h1 className='bar-tickets-header-time'>{ order.time }</h1>
+            <h1 className='bar-tickets-header-table'>Table { order.table_number }</h1>
+            <h1 className='bar-tickets-header-time'>{ order.order_time }</h1>
           </div>
           
           <div className='bar-tickets-main'>
             <ul className='bar-tickets-main-order-items'>
-              { renderOrderItems(order.basket) }
+              { renderOrderItems(order.orders) }
             </ul>
           </div>
           
           <div className='bar-tickets-footer'>
             <button className='bar-tickets-footer-print'>Print</button>
+            <button className='bar-tickets-footer-complete' onClick={() => { completeOrder(order.id) }}>| Complete</button>
             <h1 className='bar-tickets-footer-price'>£ { order.total.toFixed(2) }</h1>
           </div>
         </div>
@@ -75,26 +162,34 @@ const BarScreen = () => {
   
   const renderOrderItems = (basket) => {
     let orderItemsRendering = []
-    let orderItemsObject = {}
-    basket.forEach((item, i) => {
-      if (item.displayBar) {
-        // if the property/item isn't in the object yet, add it before adding to the number of items
-        if (!(item.label in orderItemsObject)) {
-          // create the item property
-          orderItemsObject[item.label] = 0
-        }
-        // add to the property
-        orderItemsObject[item.label] += 1
+    basket.forEach((item, idx) => {
+      if (item.displayBar === true) {
+        orderItemsRendering.push(
+          <li className='bar-tickets-main-order-items-each'>
+            <p style={{ width: "15%", textAlign: "right", marginRight: "2%" }}>{ item.quantity } x</p>
+            <p style={{ width: "55%" }}>{ item.label }</p>
+            <p style={{ width: "30%", textAlign: "right" }}>£ { (item.price * item.quantity).toFixed(2) }</p>
+          </li>
+        )
       }
-    });
-    for (let [key, value] of Object.entries(orderItemsObject)) {
-      orderItemsRendering.push(
-        <li>
-          { value } x { key }
-        </li>
-      )
-    }
+    })
+      
+    
     return orderItemsRendering;
+  }
+  
+  const completeOrder = (orderId) => {
+    const body = {
+      'order_id': orderId
+    }
+    fetch(`http://${DOMAIN}:6030/api/previous_orders`, {
+      method: 'POST', 
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+    .then(res => fetchOrders())
   }
   
   

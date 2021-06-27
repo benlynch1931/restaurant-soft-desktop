@@ -41,7 +41,8 @@
   margin: 3%;
   flex: 0 0 19%;
   /* width: ; */
-  min-height: 270px;
+  /* min-height: 270px; */
+  height: 450px;
   background-color: #FFFFFF;
   
   position: relative;
@@ -55,7 +56,7 @@
   position: relative;
 }
 
-.bar-tickets-header-table, .bar-tickets-header-time, .bar-tickets-footer-price, .bar-tickets-footer-print {
+.bar-tickets-header-table, .bar-tickets-header-time, .bar-tickets-footer-price, .bar-tickets-footer-print, .bar-tickets-footer-complete {
   line-height: 1;
   font-size: 20px;
   margin-top: 15px;
@@ -71,7 +72,8 @@
 }
 
 .bar-tickets-main {
-  min-height: 170px;
+  /* min-height: 170px; */
+  height: 350px;
   width: 100%;
   box-sizing: border-box;
   padding: 15px;
@@ -82,6 +84,15 @@
   padding: 0;
   margin: 0;
   font-size: 20px;
+}
+
+.bar-tickets-main-order-items-each {
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.bar-tickets-main-order-items-each p {
+  margin: 0;
 }
 
 .bar-tickets-footer {
@@ -96,10 +107,14 @@
   right: 5px;
 }
 
-.bar-tickets-footer-print {
+.bar-tickets-footer-print, .bar-tickets-footer-complete {
   height: 100%;
   margin-top: 0;
   border: none;
   background-color: rgba(0, 0, 0, 0);
   color: #FFFFFF;
+}
+
+.bar-tickets-footer-complete {
+  left: 50px;
 }
