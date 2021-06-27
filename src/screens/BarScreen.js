@@ -13,35 +13,7 @@ const BarScreen = () => {
   const { setScreen } = useContext(AppContext);
   const [orders, setOrders] = useState([])
   
-  // const orders = [
-  //   {
-  //     name: '',
-  //     number: 3,
-  //     time: '19:23',
-  //     total: 11.25,
-  //     basket: "label:Tribute,quantity:3,price:3.75,displayBar:true,displayKitchen:false;label:Haze,quantity:10,price:3.8,displayBar:true,displayKitchen:false"
-  //     // basket: [
-  //     //   {
-  //     //     label: 'Tribute',
-  //     //     price: 3.75,
-  //     //     displayBar: true,
-  //     //     displayKitchen: false
-  //     //   },
-  //     //   {
-  //     //     label: 'Haze',
-  //     //     price: 3.80,
-  //     //     displayBar: true,
-  //     //     displayKitchen: false
-  //     //   },
-  //     //   {
-  //     //     label: 'KITCHEN',
-  //     //     price: 0,
-  //     //     displayBar: false,
-  //     //     displayKitchen: true
-  //     //   }
-  //     // ]
-  //   }
-  // ]
+
   
   const fetchOrders = () => {
     fetch(`http://${DOMAIN}:6030/api/orders`, {
@@ -52,7 +24,6 @@ const BarScreen = () => {
     })
     .then(res => res.json())
     .then(data => formatOrders(data.orders))
-    // .then(data => console.log(data.orders))
     
     // Continually check database for new orders. 60000 = 1 minute
     setTimeout(() => {
@@ -203,36 +174,10 @@ const BarScreen = () => {
       </div>
       
       <div className='bar-main-display'>
-        {/*<div className='bar-tickets'>
-        
-          <div className='bar-tickets-header'>
-            <h1 className='bar-tickets-header-table'>Table 1</h1>
-            <h1 className='bar-tickets-header-time'>20:23</h1>
-          </div>
-          
-          <div className='bar-tickets-main'>
-            <ul></ul>
-          </div>
-          
-          <div className='bar-tickets-footer'>
-            <button className='bar-tickets-footer-print'>Print</button>
-            <h1 className='bar-tickets-footer-price'>£100.00</h1>
-          </div>
-        </div>*/}
+
         { iterateOrders() }
         
-        {/*<div className='bar-tickets'></div>
-        
-        <div className='bar-tickets'></div>
-        
-        <div className='bar-tickets'></div>
-        
-        <div className='bar-tickets'></div>
-        <div className='bar-tickets'></div>
-        <div className='bar-tickets'></div>
-        <div className='bar-tickets'></div>
-        
-        <div className='bar-tickets'></div>*/}
+
         
       </div>
     </div>
