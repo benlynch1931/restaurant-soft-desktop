@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import Keyboard from 'react-simple-keyboard';
 
 import '../styles/PLU.css';
+import { AppContext } from '../contexts/AppContext.js'
+
 const Pool = require('pg').Pool
 
+const DOMAIN = "192.168.1.213"
 
 const PLU = () => {
+  
+  const { setScreen } = useContext(AppContext);
   
   const [pluItems, setPluItems] = useState([])
   const [specificPluItem, setSpecificPluItem] = useState(null)
@@ -137,7 +142,17 @@ const PLU = () => {
               <button className='edit-plu-item__list-input-button' onClick={(event) => { pluItemBooleanChange('display_kitchen', specificPluItem.display_kitchen, specificPluIndex) }}>{ renderYesNo(specificPluItem.display_kitchen) }</button>
             </li>
             
-            { displayDrinkOrFoodInfo(specificPluItem.group) }
+            <li className='edit-plu-item__list-item'>
+              <h3 className='edit-plu-item__list-label'>Stock Controlled?</h3>
+              <button className='edit-plu-item__list-input-button' onClick={(event) => { pluItemBooleanChange('stock_controlled', specificPluItem.stock_controlled, specificPluIndex) }}>{ renderYesNo(specificPluItem.stock_controlled) }</button>
+            </li>
+            
+            <li className='edit-plu-item__list-item'>
+              <h3 className='edit-plu-item__list-label'>Stock Count</h3>
+              <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('stock_count', event, specificPluIndex) }} value={specificPluItem.stock_count}/>
+            </li>
+            
+            { displayDrinkAndFoodInfo() }
             
             
             
@@ -240,7 +255,7 @@ const PLU = () => {
   }
   
   const fetchColours = () => {
-    fetch('http://192.168.1.213:6030/api/colours', {
+    fetch(`http://${DOMAIN}:6030/api/colours`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -253,7 +268,7 @@ const PLU = () => {
   }
   
   const fetchDepartments = () => {
-    fetch('http://192.168.1.213:6030/api/departments', {
+    fetch(`http://${DOMAIN}:6030/api/departments`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -266,45 +281,41 @@ const PLU = () => {
   }
   
   const renderYesNo = (booleanValue) => {
-    if (booleanValue) {
-      return 'YES'
-    }
-    return 'NO'
+    return booleanValue ? "YES" : "NO"
   }
   
-  const displayDrinkOrFoodInfo = (group) => {
+  const displayDrinkAndFoodInfo = () => {
     let rendering = []
-    if (group.toLowerCase() == 'drinks') {
       rendering.push(
         <li className='edit-plu-item__list-item'>
           <h3>ABV</h3>
           <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('alcoholic_percentage', event, specificPluIndex) }} value={specificPluItem.alcoholic_percentage}/>
         </li>
       )
-      rendering.push(<li className='edit-plu-item__list-item'>
+      rendering.push(
+        <li className='edit-plu-item__list-item'>
           <h3>Brewery/Manufacturer</h3>
           <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('brewery', event, specificPluIndex) }} value={specificPluItem.brewery}/>
         </li>
       )
-      rendering.push(<li className='edit-plu-item__list-item'>
+      rendering.push(
+        <li className='edit-plu-item__list-item'>
           <h3>Description</h3>
           <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('description', event, specificPluIndex) }} value={specificPluItem.description}/>
         </li>
       )
-    } else {
       rendering.push(
         <li className='edit-plu-item__list-item'>
           <h3>Allergens</h3>
           <input className='edit-plu-item__list-input' onChange={(event) => { pluItemValueChange('allergens', event, specificPluIndex) }} value={specificPluItem.allergens}/>
         </li>
       )
-    }
     return rendering;
   }
   
   
   const getPLUItems = () => {
-    fetch('http://192.168.1.213:6030/api/plus', {
+    fetch(`http://${DOMAIN}:6030/api/plus?terminal=true`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -395,7 +406,12 @@ const PLU = () => {
         { renderSpecificPLUItem() }
       </div>
       
-      <h1 style={{ textAlign: 'center' }}>PLU</h1>
+      <div className='plu-navbar'>
+        <h1 className='plu-navbar-title'>PLU</h1>
+        <button className='plu-back-button' onClick={() => { console.log("Working"); setScreen('main') }}>
+          <h1>Back</h1>
+        </button>
+      </div>
       <ul className='plu-list'>
         { renderPLUItems() }
       </ul>

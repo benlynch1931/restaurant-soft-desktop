@@ -5,6 +5,7 @@ import BarScreen from '../screens/BarScreen.js';
 import KitchenScreen from '../screens/KitchenScreen.js';
 import PLU from '../screens/PLU.js'
 import SettingsController from './SettingsController.js';
+import NavigationWindows from '../components/NavigationWindows.js';
 
 import { AppContext } from '../contexts/AppContext.js'
 
@@ -28,7 +29,10 @@ const ScreenController = () => {
     )
   } else if (screen === 'bar') {
     return (
-      <BarScreen></BarScreen>
+      <div>
+        <NavigationWindows />
+        <BarScreen></BarScreen>
+      </div>
     )
   } else if (screen === 'kitchen') {
     return (

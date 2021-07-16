@@ -1,0 +1,39 @@
+.bottomNav-main {
+  width: 100%;
+  height: 75px;
+  background-color: #FFFFFF;
+  position: absolute;
+  bottom: 0;
+  box-shadow: 0 0 20px 3px #919191;
+}
+
+.nav-list-div {
+  display: flex;
+  height: 100%;
+}
+
+.nav-list-div div {
+  height: 100%;
+  flex: 1;
+  /* border-top: 2px solid #000000; */
+  /* border-bottom: 2px solid #000000; */
+  border-left: 2px solid #000000;
+  position: relative;
+}
+
+.nav-list-button {
+  font-weight: bold;
+  font-size: 32px;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.nav-list-button:hover {
+  background-color: #E2E2E2;
+  cursor: pointer;
+}
+
+.left-item {
+  border-left-width: 0px !important;
+}

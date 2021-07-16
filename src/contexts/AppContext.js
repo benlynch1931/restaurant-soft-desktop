@@ -5,7 +5,8 @@ export const AppContext = createContext();
 class AppContextProvider extends Component {
   state = {
     screen: 'main',
-    settingsScreen: 'main'
+    settingsScreen: 'main',
+    navigationWindow: null,
 }
 
   setScreen = (newScreen) => {
@@ -14,6 +15,10 @@ class AppContextProvider extends Component {
   
   setSettingsScreen = (newScreen) => {
     this.setState({ settingsScreen: newScreen})
+  }
+  
+  setNavigationWindow = (newWindow) => {
+    this.setState({ navigationWindow: newWindow })
   }
 
 
@@ -25,7 +30,8 @@ class AppContextProvider extends Component {
       <AppContext.Provider value={{
         ...this.state,
         setScreen: this.setScreen,
-        setSettingsScreen: this.setSettingsScreen
+        setSettingsScreen: this.setSettingsScreen,
+        setNavigationWindow: this.setNavigationWindow
       }}>
       {this.props.children}
       </AppContext.Provider>

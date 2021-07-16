@@ -1,0 +1,49 @@
+.modifications-navbar {
+  background-color: #FFFFFF;
+  height: 100px;
+  width: 100%;
+  /* border: 1px solid #000000; */
+  box-shadow: 0 0 20px 3px #919191;
+  /* margin-bottom: 10px; */
+}
+
+.modifications-navbar-title {
+  position: absolute;
+  line-height: 1;
+  margin-left: 50%;
+  margin-top: 50px;
+  transform: translate(-50%, -50%);
+}
+
+.modifications-back-button {
+  position: fixed;
+  right: 0;
+  height: 100px;
+  width: 20%;
+  border: none;
+  border-left: 1px solid #000000;
+  line-height: 22px;
+  font-size: 22px;
+}
+
+.modifications-list {
+  margin-top: 25px;
+  list-style-type: none;
+  padding-right: 40px;
+  overflow-y: scroll;
+  height: calc(100% - 141px);
+}
+
+.item-extra {
+  width: 5%;
+  text-align: left;
+}
+
+.modifications-list h2 {
+  margin: 10px 0;
+}
+
+.modifications-list button {
+  border: none;
+  background-color: #FFFFFF;
+}

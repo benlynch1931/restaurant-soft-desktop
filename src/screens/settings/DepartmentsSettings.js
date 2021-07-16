@@ -305,13 +305,16 @@ const DepartmentsSettings = () => {
         { renderSpecificDepartmentItem() }
       </div>
       
-      <h1 style={{ textAlign: 'center' }}>Departments</h1>
+      <div className='department-navbar'>
+        <h1 className='department-navbar-title'>Departments</h1>
+        <button className='department-back-button' onClick={() => { setSettingsScreen('main') }}>
+          <h1>Back</h1>
+        </button>
+      </div>
       <ul className='department-list'>
         { renderDepartments() }
       </ul>
-      <div className="settings-menu-rows">
-        <button className="settings-menu-buttons" onClick={() => { setSettingsScreen('main') }}><h2>BACK</h2></button>
-      </div>
+
     </div>
   )
 }

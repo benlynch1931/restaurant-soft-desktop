@@ -17,6 +17,9 @@ const MainSettings = () => {
         <button className="settings-menu-buttons" onClick={() => { setSettingsScreen('printing') }}><h2>Printing</h2></button>
         <button className="settings-menu-buttons" onClick={() => { setSettingsScreen('stock') }}><h2>Stock</h2></button>
       </div>
+      <div className='settings-menu-rows'>
+        <button className="settings-menu-buttons" onClick={() => { setSettingsScreen('extras') }}><h2>Extras</h2></button>
+      </div>
       <div className="settings-menu-rows">
         <button className="settings-menu-buttons" onClick={() => { setScreen('main') }}><h2>BACK</h2></button>
       </div>

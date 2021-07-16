@@ -21,20 +21,17 @@
   width: 20%;
   border: none;
   border-left: 1px solid #000000;
-}
-
-.bar-back-button {
   line-height: 22px;
   font-size: 22px;
 }
 
 .bar-main-display {
-  max-height: calc(100vh - 100px);
+  height: calc(100vh - 175px);
   width: 100%;
   flex-flow: row wrap;
   display: flex;
   /* border: 1px solid #000000; */
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .bar-tickets {
@@ -84,6 +81,8 @@
   padding: 0;
   margin: 0;
   font-size: 20px;
+  height: 320px;
+  overflow-y: auto;
 }
 
 .bar-tickets-main-order-items-each {

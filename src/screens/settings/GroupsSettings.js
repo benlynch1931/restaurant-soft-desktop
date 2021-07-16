@@ -259,13 +259,15 @@ const GroupsSettings = () => {
         { renderSpecificGroupItem() }
       </div>
       
-      <h1 style={{ textAlign: 'center' }}>Groups</h1>
+      <div className='group-navbar'>
+        <h1 className='group-navbar-title'>Groups</h1>
+        <button className='group-back-button' onClick={() => { setSettingsScreen('main') }}>
+          <h1>Back</h1>
+        </button>
+      </div>
       <ul className='group-list'>
         { renderGroups() }
       </ul>
-      <div className="settings-menu-rows">
-        <button className="settings-menu-buttons" onClick={() => { setSettingsScreen('main') }}><h2>BACK</h2></button>
-      </div>
     </div>
   )
 }
